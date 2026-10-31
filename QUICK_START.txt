@@ -1,0 +1,21 @@
+MISS FISH 2026 — UPDATE YOUR EXISTING NETLIFY SITE
+===================================================
+
+GOOD NEWS: No new site. Your current link and QR code stay the same:
+https://luminous-eclair-a2730e.netlify.app/
+
+1. Extract this ZIP. Open the `miss-fish-2026-upgrade` folder in VS Code.
+2. In Netlify -> your existing site -> Environment variables, create:
+   NETLIFY_API_TOKEN = [your own private Netlify personal access token]
+   Keep it secret; do not put it in your files or share it.
+3. From VS Code -> Terminal (inside the project folder), run:
+   npx netlify-cli login
+   npx netlify-cli link
+   (IMPORTANT: choose the EXISTING luminous-eclair-a2730e project)
+   npx netlify-cli deploy --prod --no-build --dir=public --functions=netlify/functions
+4. Open your original URL and click View results to test.
+
+A real public leaderboard requires the `results` Netlify Function.
+Just dragging public/ onto Netlify will not reliably deploy this function.
+
+Full details, error guidance, and notes on voting data: README.md
