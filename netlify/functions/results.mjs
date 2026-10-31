@@ -1,3 +1,4 @@
+import { getStore } from '@netlify/blobs';
 // Private read-only vote aggregator for Netlify Forms.
 // NEVER place the NETLIFY_API_TOKEN in HTML, client-side JS, or this file.
 // The browser only receives aggregate counts; submission metadata stays private.
@@ -34,41 +35,61 @@ async function netlifyGet(path, token) {
   } finally { clearTimeout(timeout); }
 }
 
+// Token-free mode uses individually stored VERIFIED form events (not browser claims).
+// It starts counting only after the event handler is deployed. It cannot read
+// historical Netlify Forms submissions without an authenticated Netlify API call.
+
+const STORE = 'miss-fish-verified-votes-2026';
+const REGION = 'eu-central-1';
+function freshCounts() { return {percia:0,stella:0,bella:0,roxy:0}; }
+
+async function fromVerifiedEvents() {
+  const store = getStore({name: STORE, region: REGION, consistency: 'strong'});
+  const {blobs} = await store.list({prefix:'votes/'});
+  const counts = freshCounts();
+  for (const blob of blobs) {
+    const match = /^votes\/(percia|stella|bella|roxy)\/[0-9a-f-]{36}$/.exec(blob.key);
+    if (match) counts[match[1]] += 1;
+  }
+  return {counts,total:Object.values(counts).reduce((a,b)=>a+b,0),source:'verified-netlify-events',updatedAt:new Date().toISOString()};
+}
+
+async function fromFormAPI(token,siteId) {
+  const forms = await netlifyGet(`/sites/${encodeURIComponent(siteId)}/forms`,token);
+  if (!Array.isArray(forms)) throw new Error('Invalid form response');
+  const target = forms.find(item=>item.name===FORM_NAME);
+  if (!target) throw new Error('Miss Fish form not found in Netlify');
+  const counts = freshCounts();
+  let complete = false;
+  for (let page=1; page<=MAX_PAGES; page++) {
+    const submissions = await netlifyGet(`/forms/${encodeURIComponent(target.id)}/submissions?page=${page}&per_page=100`,token);
+    if (!Array.isArray(submissions)) throw new Error('Invalid submissions response');
+    for (const item of submissions) {
+      const choice = item?.data?.fish;
+      if (typeof choice === 'string' && Object.hasOwn(FISH,choice)) counts[FISH[choice]]++;
+    }
+    if (submissions.length < 100) { complete=true; break; }
+  }
+  if (!complete) throw new Error('Exceeded 5,000 verified Netlify Form submissions');
+  return {counts,total:Object.values(counts).reduce((a,b)=>a+b,0),source:'verified-netlify-forms',updatedAt:new Date().toISOString()};
+}
+
 export default async function results(request) {
   if (request.method !== 'GET') return json({message:'Method not allowed'},405);
-  const token = process.env.NETLIFY_API_TOKEN;
-  const siteId = process.env.SITE_ID;
-  if (!token || !siteId) {
-    return json({message:'Live results need one-time Netlify setup: add NETLIFY_API_TOKEN to this site’s environment variables, then redeploy. See README.md.'},503);
-  }
   try {
-    const forms = await netlifyGet(`/sites/${encodeURIComponent(siteId)}/forms`,token);
-    if (!Array.isArray(forms)) throw new Error('The API returned invalid form data');
-    const targetForm = forms.find(item => item.name === FORM_NAME);
-    if (!targetForm) {
-      return json({message:'No miss-fish-vote form was found. Turn on Netlify Forms detection, redeploy, and submit a test vote.'},503);
-    }
-    const counts = {percia:0,stella:0,bella:0,roxy:0};
-    const formId = encodeURIComponent(targetForm.id);
-    let reachedEnd = false;
-    for (let page = 1; page <= MAX_PAGES; page++) {
-      const submissions = await netlifyGet(`/forms/${formId}/submissions?page=${page}&per_page=100`,token);
-      if (!Array.isArray(submissions)) throw new Error('Invalid submission response');
-      for (const submission of submissions) {
-        const choice = submission && submission.data && submission.data.fish;
-        if (typeof choice === 'string' && Object.hasOwn(FISH,choice)) {
-          counts[FISH[choice]] += 1;
-        }
+    // Optional: if already configured, the API shows ALL historical Forms votes.
+    // Without it, the event-based live ledger works automatically for new votes.
+    const token = process.env.NETLIFY_API_TOKEN;
+    const siteId = process.env.SITE_ID;
+    if (token && siteId) {
+      try { return json(await fromFormAPI(token,siteId)); }
+      catch (error) {
+        console.warn('Historical Netlify Forms API is unavailable; switching to verified event ledger:',error.message);
       }
-      if (submissions.length < 100) { reachedEnd = true; break; }
     }
-    if (!reachedEnd) {
-      // Fail clearly rather than claiming to show complete totals when capped.
-      return json({message:'More than 5,000 votes were submitted. Ask the site administrator to export and verify the full totals.'},503);
-    }
-    return json({counts,total:Object.values(counts).reduce((a,b)=>a+b,0),source:'verified-netlify-forms',updatedAt:new Date().toISOString()});
+    return json(await fromVerifiedEvents());
   } catch (error) {
-    console.error('Could not load Netlify Form results:',error.message);
-    return json({message:'Live vote totals are temporarily unavailable. Check the Netlify Function logs and API token, then try again.'},502);
+    console.error('Miss Fish live results unavailable:',error);
+    return json({message:'Live results are temporarily unavailable. Please try refreshing in a moment.'},503);
   }
 }

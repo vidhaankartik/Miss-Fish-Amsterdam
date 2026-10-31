@@ -1,0 +1,12 @@
+{
+  "name": "miss-fish-amsterdam-2026",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Miss Fish Netlify Forms vote leaderboard (verified events via Netlify Blobs)",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@netlify/blobs": "11.1.7"
+  }
+}

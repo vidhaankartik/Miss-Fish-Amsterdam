@@ -14,6 +14,7 @@
   const resultsContent = document.querySelector('#results-content');
   const refreshResults = document.querySelector('#refresh-results');
   const resultsTotal = document.querySelector('#results-total');
+  const resultsDisclaimer = document.querySelector('#results-disclaimer');
   const winnerName = document.querySelector('#winner-name');
   const winnerCaption = document.querySelector('#winner-caption');
   const winnerBanner = document.querySelector('#winner-banner');
@@ -151,6 +152,11 @@
         row.classList.toggle('is-leader',leaders.includes(slug));
       }
       resultsTotal.textContent = `${total} verified ${total===1?'vote':'votes'} counted`;
+      if (resultsDisclaimer) {
+        resultsDisclaimer.textContent = payload.source === 'verified-netlify-forms'
+          ? 'An informal community poll, not a scientific sample. Counts include verified Netlify Forms submissions, including earlier votes. Figures may take a moment to update.'
+          : 'An informal community poll, not a scientific sample. Counts include verified submissions since this leaderboard update was deployed. Earlier Netlify Forms votes are not included unless imported separately; verification can take a moment.';
+      }
       resultsContent.hidden = false;
       resultsStatus.hidden = true;
     } catch (e) {

@@ -1,9 +1,13 @@
 # Netlify configuration — deploy this project to your EXISTING Netlify site.
 [build]
   publish = "public"
+  # @netlify/blobs 11 requires recent Node 22. Netlify installs dependencies on Git deployments.
+  [build.environment]
+    NODE_VERSION = "22"
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"
