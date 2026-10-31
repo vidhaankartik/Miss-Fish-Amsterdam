@@ -89,3 +89,23 @@
 @media(max-width:740px){.nav-links .nav-greenmile{display:inline-flex!important;font-size:0;padding:8px;border:1px solid rgba(255,224,162,.45);border-radius:99px;line-height:1}.nav-links .nav-greenmile::before{content:'Green Mile';font-size:11px}.nav-greenmile span{font-size:13px}.nav{gap:9px}.nav-links{gap:8px}.nav-vote{font-size:12px}.brand strong{font-size:16px}.brand-mark{font-size:24px}.brand small{font-size:7px}.hero::after,.ballot-section::before{inset:-20% -70%}.fish-card:hover{transform:none}.fish-card.is-selected{transform:translateY(-2px)}.results-panel{margin-top:26px;padding:24px 17px}.results-head{gap:16px}.refresh-results{padding:9px 12px;font-size:11px}.winner-banner{padding:16px 17px;gap:15px}.winner-banner strong{font-size:23px}.result-row{gap:11px;padding:10px}.result-row img{width:54px;height:58px;flex-basis:54px}.result-meta{align-items:start;gap:8px}.result-meta strong{font-size:12px}.result-meta strong span{display:block}.result-numbers{display:block;text-align:right}.result-numbers b{font-size:13px;display:block}.result-numbers small{font-size:10px}.result-track{height:10px}}
 @media(max-width:380px){.brand-mark{display:none}.nav-links .nav-greenmile::before{content:'Green Mile';font-size:10px}.nav-vote{padding:9px 10px}.result-row img{width:48px;flex-basis:48px;height:53px}}
 @media(prefers-reduced-motion:reduce){.celebration-particle{display:none}.fish-card{will-change:auto}}
+
+
+/* After-vote results: no premature leaderboard or awkward page-length jump. */
+.vote-success .success-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+.vote-success .success-actions .btn{min-width:190px;gap:12px}
+.vote-success .post-vote-hint{font-size:12px;color:#597468;line-height:1.6;margin:16px auto 0;max-width:420px}
+.vote-success .btn-results{background:#e9f2e6;color:#153c31;border:1px solid #a4c3ac}
+.vote-success .btn-results:hover{background:#d9e9d9}
+/* The leaderboard now opens in a centered, scrollable overlay, so the rest of
+   the page stays in place and the EcoWal/voting sections don't look cut off. */
+body.results-open{overflow:hidden}
+.results-overlay{position:fixed;inset:0;z-index:500;display:grid;place-items:center;padding:clamp(12px,3vw,34px);background:rgba(5,24,22,.83);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overscroll-behavior:contain}
+.results-overlay[hidden]{display:none!important}
+.results-overlay .results-panel{width:min(100%,860px);max-height:calc(100dvh - clamp(24px,6vw,68px));overflow-y:auto;overscroll-behavior:contain;margin:0;scrollbar-width:thin;scrollbar-color:#aec7b4 transparent;border:1px solid rgba(238,250,233,.82);box-shadow:0 30px 100px rgba(0,0,0,.42)}
+.results-head-actions{display:flex;align-items:center;gap:9px;flex:none}
+.close-results{appearance:none;border:1px solid #c4dccd;background:#e5efe7;color:#204a3b;border-radius:50%;height:41px;width:41px;display:grid;place-items:center;font-size:27px;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
+.close-results:hover{background:#d6e9d8;transform:scale(1.04)}
+.close-results:focus-visible{outline:3px solid #cb8e44;outline-offset:3px}
+@media(max-width:740px){.results-overlay{padding:12px}.results-overlay .results-panel{max-height:calc(100dvh - 24px);padding:24px 17px}.results-head{align-items:flex-start}.results-head-actions{gap:6px}.close-results{width:36px;height:36px;font-size:23px}.results-head h3{font-size:clamp(32px,8vw,48px)}.refresh-results{padding:7px 10px}.vote-success .success-actions{flex-direction:column}.vote-success .success-actions .btn{width:min(100%,290px)}}
+@media(max-width:380px){.results-head{gap:5px}.results-head h3{font-size:30px}.results-head-actions{gap:5px}.refresh-results{font-size:10px;padding:7px 8px}}

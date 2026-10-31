@@ -9,7 +9,9 @@
   const successMessage = document.querySelector('#success-message');
   const preview = document.querySelector('#preview-notice');
   const resultsToggle = document.querySelector('#results-toggle');
+  const resultsOverlay = document.querySelector('#results-overlay');
   const resultsPanel = document.querySelector('#results-panel');
+  const closeResultsButton = document.querySelector('#close-results');
   const resultsStatus = document.querySelector('#results-status');
   const resultsContent = document.querySelector('#results-content');
   const refreshResults = document.querySelector('#refresh-results');
@@ -171,19 +173,38 @@
       refreshResults.disabled = false;
     }
   }
-  function revealResults({scroll=false} = {}) {
-    resultsPanel.hidden = false;
-    resultsToggle.setAttribute('aria-expanded','true');
-    resultsToggle.innerHTML = '<span class="results-button-icon" aria-hidden="true">◉</span> Hide results <span aria-hidden="true">↑</span>';
+  // Reveal the leaderboard only after a vote has been successfully submitted
+  // (or after a previously submitted vote is restored on this browser).
+  function revealResults() {
+    if (!getSavedVote() || !form.hidden) return;
+    resultsOverlay.hidden = false;
+    document.body.classList.add('results-open');
+    resultsToggle.setAttribute('aria-expanded', 'true');
+    closeResultsButton.focus({preventScroll:true});
     void loadResults();
-    if (scroll) resultsPanel.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
   }
-  resultsToggle.addEventListener('click', () => {
-    if (resultsPanel.hidden) revealResults({scroll:true});
-    else {
-      resultsPanel.hidden = true;
-      resultsToggle.setAttribute('aria-expanded','false');
-      resultsToggle.innerHTML = '<span class="results-button-icon" aria-hidden="true">◉</span> View results <span aria-hidden="true">↓</span>';
+  function closeResults() {
+    if (resultsOverlay.hidden) return;
+    resultsOverlay.hidden = true;
+    document.body.classList.remove('results-open');
+    resultsToggle.setAttribute('aria-expanded', 'false');
+    resultsToggle.focus({preventScroll:true});
+  }
+  resultsToggle.addEventListener('click', revealResults);
+  closeResultsButton.addEventListener('click', closeResults);
+  resultsOverlay.addEventListener('click', (event) => {
+    if (event.target === resultsOverlay) closeResults();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (resultsOverlay.hidden) return;
+    if (event.key === 'Escape') { event.preventDefault(); closeResults(); return; }
+    if (event.key === 'Tab') {
+      const focusables = [...resultsPanel.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])')];
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   });
   refreshResults.addEventListener('click',loadResults);
@@ -209,10 +230,10 @@
       }
       saveVote(selected.value);
       showSuccess(selected.value,isPreview,false);
-      success.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
-      // Netlify processing can lag by seconds; show the panel immediately then refresh after.
-      revealResults();
-      if (!isPreview) setTimeout(() => { if (!resultsPanel.hidden) void loadResults(); },3500);
+      success.scrollIntoView({behavior:'auto',block:'center'});
+      // The results button is now inside the post-vote confirmation.
+      // Do not reveal the leaderboard automatically: visitors decide when to view it.
+      // A fresh count is loaded whenever that button is pressed.
     } catch (e) {
       error.textContent = 'Your vote could not be submitted. Check your connection and Netlify Forms, then try again.';
       error.hidden = false;

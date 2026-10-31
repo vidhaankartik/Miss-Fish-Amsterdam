@@ -91,16 +91,26 @@
         <div class="ballot-footer"><p><span aria-hidden="true">✳</span> One choice. No name or email needed.<br><small>Informal public engagement vote, not a scientific survey.</small></p><button id="submit-vote" class="btn btn-gold submit-button" type="submit">Cast my vote <span aria-hidden="true">↗</span></button></div>
         <p id="vote-error" class="vote-error" role="alert" hidden></p>
       </form>
-      <div id="vote-success" class="vote-success" role="status" aria-live="polite" hidden><div class="celebration-layer" id="celebration-layer" aria-hidden="true"></div><span class="success-icon" aria-hidden="true">✳</span><span class="overline">BALLOT RECEIVED</span><h3>You're <em>fin-tastic!</em></h3><p id="success-message">Your vote has been recorded. Thanks for meeting Amsterdam's underwater neighbours!</p><a href="#ecowal" class="btn btn-dark">Discover the EcoWal <span aria-hidden="true">↗</span></a></div>
+      <div id="vote-success" class="vote-success" role="status" aria-live="polite" hidden>
+        <div class="celebration-layer" id="celebration-layer" aria-hidden="true"></div>
+        <span class="success-icon" aria-hidden="true">✳</span><span class="overline">BALLOT RECEIVED</span>
+        <h3>You're <em>fin-tastic!</em></h3><p id="success-message">Your vote has been recorded. Thanks for meeting Amsterdam's underwater neighbours!</p>
+        <div class="success-actions">
+          <button id="results-toggle" class="btn btn-results" type="button" aria-controls="results-panel" aria-expanded="false"><span class="results-button-icon" aria-hidden="true">◉</span> View results <span aria-hidden="true">↗</span></button>
+          <a href="#ecowal" class="btn btn-dark">Discover the EcoWal <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="post-vote-hint">Results are unlocked after voting. See who's currently leading!</p>
+      </div>
     </div>
-    <div class="results-actions">
-      <button id="results-toggle" class="btn btn-results" type="button" aria-controls="results-panel" aria-expanded="false"><span class="results-button-icon" aria-hidden="true">◉</span> View results <span aria-hidden="true">↓</span></button>
-      <p class="results-hint">See how Amsterdam’s four fish are doing.</p>
-    </div>
-    <section id="results-panel" class="results-panel" aria-labelledby="results-title" hidden>
+    </div></section>
+    <div id="results-overlay" class="results-overlay" hidden>
+      <section id="results-panel" class="results-panel" role="dialog" aria-modal="true" aria-labelledby="results-title" aria-describedby="results-description" tabindex="-1">
       <div class="results-head">
-        <div><span class="overline">LIVE FROM THE CANAL</span><h3 id="results-title">The <em>leaderboard.</em></h3><p class="results-subtitle">Votes submitted through Miss Fish. Updates on refresh.</p></div>
-        <button id="refresh-results" type="button" class="refresh-results" aria-label="Refresh vote results"><span aria-hidden="true">↻</span> Refresh</button>
+        <div><span class="overline">LIVE FROM THE CANAL</span><h3 id="results-title">The <em>leaderboard.</em></h3><p class="results-subtitle" id="results-description">Votes submitted through Miss Fish. Updates on refresh.</p></div>
+        <div class="results-head-actions">
+          <button id="refresh-results" type="button" class="refresh-results" aria-label="Refresh vote results"><span aria-hidden="true">↻</span> Refresh</button>
+          <button id="close-results" type="button" class="close-results" aria-label="Close results" title="Close results">×</button>
+        </div>
       </div>
       <div id="results-status" class="results-status" role="status" aria-live="polite">Loading results…</div>
       <div id="results-content" hidden>
@@ -114,8 +124,8 @@
         <p class="results-total" id="results-total">0 verified votes counted</p>
         <p class="results-disclaimer" id="results-disclaimer">An informal community poll, not a scientific sample. Totals count verified votes after this leaderboard update. Earlier submissions are included only if the site owner enables the optional Netlify Forms API integration. Verification may take a moment.</p>
       </div>
-    </section>
-    </div></section>
+      </section>
+    </div>
   </main>
   <footer class="site-footer"><div class="shell footer-inner"><div><strong>MISS FISH <span>AMSTERDAM 2026</span></strong><p>An illustrated public engagement concept for The Green Mile.</p></div><a href="https://www.greenmileamsterdam.com/" target="_blank" rel="noopener noreferrer" class="footer-greenmile">The Green Mile Amsterdam ↗</a><a href="#top" class="back-top">Back to the surface <span aria-hidden="true">↑</span></a></div></footer>
 </body>
