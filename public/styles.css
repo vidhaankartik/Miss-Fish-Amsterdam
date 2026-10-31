@@ -109,3 +109,169 @@ body.results-open{overflow:hidden}
 .close-results:focus-visible{outline:3px solid #cb8e44;outline-offset:3px}
 @media(max-width:740px){.results-overlay{padding:12px}.results-overlay .results-panel{max-height:calc(100dvh - 24px);padding:24px 17px}.results-head{align-items:flex-start}.results-head-actions{gap:6px}.close-results{width:36px;height:36px;font-size:23px}.results-head h3{font-size:clamp(32px,8vw,48px)}.refresh-results{padding:7px 10px}.vote-success .success-actions{flex-direction:column}.vote-success .success-actions .btn{width:min(100%,290px)}}
 @media(max-width:380px){.results-head{gap:5px}.results-head h3{font-size:30px}.results-head-actions{gap:5px}.refresh-results{font-size:10px;padding:7px 8px}}
+
+
+
+/* ================================================================
+   MISS FISH FUN UPDATE: personality quiz, aquarium, night mode,
+   after-vote swimming animation, truthful result milestones.
+   Existing form, imagery and leaderboard remain unchanged.
+   ================================================================ */
+.nav-links{gap:clamp(12px,1.6vw,25px)}
+.night-toggle{width:41px;height:41px;flex:0 0 41px;display:grid;place-items:center;background:#24443a;border:1px solid #688476;border-radius:50%;color:#f5d399;font-size:23px;line-height:1;transition:transform .2s,background .2s}
+.night-toggle:hover{background:#35594a;transform:rotate(-10deg)}
+.night-toggle:focus-visible,.aquarium-motion:focus-visible,.aquarium-fish:focus-visible,.quiz-choice:focus-visible,.quiz-back:focus-visible,.quiz-retake:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.hero-quiz-link{font-weight:800;font-size:13px;display:inline-flex;gap:8px;align-items:center;color:#efcf96;text-decoration:underline;text-underline-offset:5px;padding:12px 2px}
+.hero-quiz-link:hover{color:#fff7cf}
+
+/* The fish are illustrated "swimming portraits"; original images remain intact. */
+.aquarium-section{position:relative;background:#092c30;color:#eef5e5;padding:87px 0 90px;overflow:hidden}
+.aquarium-section .overline{color:#c5c98d}
+.aquarium-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:29px}
+.aquarium-heading h2,.quiz-intro h2{font-family:var(--font-display);font-size:clamp(40px,5vw,65px);line-height:1.1;letter-spacing:-.05em;margin:12px 0}
+.aquarium-heading h2 em{color:#d9bc7f}.aquarium-heading p{max-width:560px;color:#c6dacf;line-height:1.7;font-size:15px;margin:0}
+.aquarium-motion{flex:none;border:1px solid #6a968a;border-radius:100px;padding:11px 18px;background:#19473f;color:#f6f4e4;font-weight:800;font-size:12px;transition:background .2s}
+.aquarium-motion:hover{background:#296055}.aquarium-motion:disabled{opacity:.65;cursor:default}
+.aquarium-tank{position:relative;height:475px;border-radius:23px;overflow:hidden;border:1px solid #55847a;isolation:isolate;background:radial-gradient(ellipse at 70% 0%,rgba(105,181,161,.36),transparent 45%),linear-gradient(150deg,#1b5654 1%,#104243 44%,#08252b 100%);box-shadow:inset 0 0 75px #041a2285,0 25px 65px #0003}
+.aquarium-tank:after{content:'';position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(107deg,transparent 0 130px,rgba(157,205,164,.045) 131px,transparent 132px);pointer-events:none}
+.aquarium-rays{position:absolute;top:-70px;left:10%;width:70%;height:80%;opacity:.22;transform:rotate(-18deg);background:repeating-conic-gradient(from 150deg at 50% 0%,transparent 0deg 9deg,#b8e9c5 10deg 11deg,transparent 12deg 23deg);mask-image:linear-gradient(#000,transparent)}
+.aquarium-floor{position:absolute;bottom:-28px;left:-5%;right:-5%;height:80px;border-radius:50% 50% 0 0;background:linear-gradient(#48685a,#203d36);box-shadow:0 -7px 30px #061c1e55;z-index:-1}
+.aquarium-bubbles{position:absolute;inset:0;pointer-events:none}
+.aquarium-bubbles i{position:absolute;bottom:-30px;border:1px solid #9bd8ca75;width:17px;height:17px;border-radius:50%;background:#98d6dc10;animation:aquarium-rise 11s linear infinite}
+.aquarium-bubbles i:nth-child(1){left:8%;animation-delay:-2s;width:9px;height:9px}.aquarium-bubbles i:nth-child(2){left:20%;animation-delay:-7s;width:22px;height:22px}.aquarium-bubbles i:nth-child(3){left:29%;animation-delay:-3s;width:11px;height:11px}.aquarium-bubbles i:nth-child(4){left:42%;animation-delay:-8s;width:19px;height:19px}.aquarium-bubbles i:nth-child(5){left:56%;animation-delay:-4s;width:8px;height:8px}.aquarium-bubbles i:nth-child(6){left:69%;animation-delay:-10s;width:16px;height:16px}.aquarium-bubbles i:nth-child(7){left:83%;animation-delay:-5s;width:25px;height:25px}.aquarium-bubbles i:nth-child(8){left:91%;animation-delay:-9s;width:9px;height:9px}.aquarium-bubbles i:nth-child(9){left:14%;animation-delay:-11s;width:12px;height:12px}.aquarium-bubbles i:nth-child(10){left:62%;animation-delay:-6s;width:11px;height:11px}.aquarium-bubbles i:nth-child(11){left:35%;animation-delay:-1s;width:21px;height:21px}.aquarium-bubbles i:nth-child(12){left:76%;animation-delay:-12s;width:11px;height:11px}
+@keyframes aquarium-rise{0%{transform:translateY(0) translateX(0);opacity:0}15%{opacity:.65}85%{opacity:.5}100%{transform:translateY(-530px) translateX(32px);opacity:0}}
+.aquarium-fish{position:absolute;display:block;width:clamp(180px,26%,295px);padding:0;background:#d8e4d5;border:3px solid #d4d6ae;border-radius:18px;box-shadow:0 14px 28px #04181f80;z-index:2;overflow:hidden;color:#153c33;text-align:left;animation:aquarium-swim var(--swim-duration,9s) ease-in-out infinite alternate;animation-delay:var(--swim-delay,0s);transition:border-color .2s,box-shadow .2s}
+.aquarium-fish img{width:100%;height:116px;object-fit:cover;object-position:center}
+.aquarium-fish span{padding:9px 13px;display:block;white-space:nowrap;font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.15}
+.aquarium-fish small{font:700 11px var(--font-body);color:#537266;letter-spacing:.01em}
+.aquarium-fish:hover{border-color:#f7c66f;box-shadow:0 18px 35px #061a1dba;animation-play-state:paused}
+.aquarium-fish:focus-visible{animation-play-state:paused}
+.fish-card.aquarium-spotlight{outline:3px solid #eab86d;outline-offset:3px;box-shadow:0 14px 45px #b0824866}
+.aquarium-percia{left:7%;top:12%;--swim-duration:7.5s;--swim-delay:-2s;--swim-x:46px;--swim-y:12px;transform:rotate(-3deg)}
+.aquarium-stella{right:8%;top:13%;--swim-duration:8.6s;--swim-delay:-4s;--swim-x:-51px;--swim-y:18px}
+.aquarium-bella{left:23%;bottom:11%;--swim-duration:10.5s;--swim-delay:-6s;--swim-x:-40px;--swim-y:-14px}
+.aquarium-roxy{right:9%;bottom:12%;--swim-duration:9.5s;--swim-delay:-1s;--swim-x:35px;--swim-y:-17px}
+@keyframes aquarium-swim{from{transform:translate3d(0,0,0) rotate(-2deg)}to{transform:translate3d(var(--swim-x),var(--swim-y),0) rotate(2deg)}}
+.aquarium-tank.is-paused .aquarium-fish,.aquarium-tank.is-paused .aquarium-bubbles i{animation-play-state:paused}
+.aquarium-caption{position:absolute;left:23px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.17em;color:#d5e2d0a8}
+.aquarium-footnote{margin:14px 0 0;text-align:center;color:#a5cac4;font-size:11px}
+
+/* Quiz is intentionally separate from the real Netlify voting form. */
+.quiz-section{background:#e6eee4;position:relative}
+.quiz-shell{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(35px,6vw,90px);align-items:center}
+.quiz-intro .overline{color:#4b775a}
+.quiz-intro h2{color:#153d34;margin:17px 0 22px}
+.quiz-intro h2 em{color:#629079}
+.quiz-intro>p{line-height:1.8;color:#4b675b;font-size:16px;max-width:390px}
+.quiz-decoration{font-size:55px;color:#94aa8d;letter-spacing:.15em;margin-top:30px}
+.quiz-card{background:#fffdf5;border:1px solid #cfddd0;border-radius:19px;box-shadow:0 24px 70px #1d493520;padding:clamp(22px,4vw,40px);min-height:452px}
+.quiz-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#53796a;font-size:10px;font-weight:800;letter-spacing:.13em}
+.quiz-topline span:last-child{color:#91a19a}
+.quiz-progress{margin-top:15px;height:8px;overflow:hidden;border-radius:20px;background:#e6eee5}
+.quiz-progress>div{height:100%;width:0%;border-radius:20px;background:linear-gradient(90deg,#79ad85,#d7ae5e);transition:width .28s ease}
+#quiz-question{font-family:var(--font-display);font-size:clamp(24px,3vw,36px);color:#183c33;letter-spacing:-.035em;line-height:1.22;margin:27px 0 21px}
+.quiz-choices{display:grid;gap:10px}
+.quiz-choice{width:100%;background:#f5f8f0;border:1px solid #dce6db;border-radius:11px;padding:12px 15px;min-height:55px;text-align:left;display:flex;align-items:center;gap:13px;color:#204839;font-size:13px;font-weight:700;transition:border-color .2s,background .2s,transform .2s,box-shadow .2s}
+.quiz-choice:hover{background:#ebf4e7;border-color:#81ad89;transform:translateX(3px);box-shadow:0 4px 13px #173e3010}
+.quiz-choice-letter{border-radius:8px;background:#dfece0;color:#2a684e;min-width:30px;height:30px;display:grid;place-items:center;font-size:12px;font-weight:800}
+.quiz-choice-arrow{margin-left:auto;color:#4a8464;font-size:21px}
+.quiz-controls{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:19px;font-size:11px;color:#7a8e80}
+.quiz-back{background:transparent;border:0;padding:7px 0;color:#245746;font-size:12px;font-weight:800}
+.quiz-back:disabled{opacity:.35}
+.quiz-result{text-align:center}
+.quiz-result .overline{color:#638b6f}
+.quiz-result-image{overflow:hidden;border-radius:13px;margin:17px 0 18px;max-height:203px;background:#31604b;box-shadow:0 12px 25px #112a2420}
+.quiz-result-image img{width:100%;height:203px;object-fit:cover;object-position:center}
+.quiz-result h3{font-family:var(--font-display);font-size:clamp(29px,4vw,43px);letter-spacing:-.05em;margin:0 0 11px;color:#153f35}
+.quiz-result p:not(.quiz-share-status){font-size:14px;color:#526b5f;line-height:1.7;max-width:440px;margin:0 auto}
+.quiz-result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.quiz-result-actions .btn{min-height:47px;gap:9px;padding:0 16px}
+.quiz-share{background:#e5eee5;color:#275541;border:1px solid #b7d2c0}
+.quiz-share:hover{background:#dce9dd}
+.quiz-retake{margin:13px auto 0;border:0;background:transparent;font-size:12px;text-decoration:underline;text-underline-offset:4px;color:#457b5b;font-weight:800;padding:9px}
+.quiz-share-status{color:#567f63;font-size:12px;min-height:0;margin:10px 0 0}
+
+/* Swimming vote celebration is visual only; form submission is unchanged. */
+.vote-swim{position:absolute;z-index:1;top:6px;left:0;right:0;height:85px;pointer-events:none;opacity:0;transform:translateX(-105%)}
+.vote-swim.is-swimming{animation:vote-fish-cross 2.9s cubic-bezier(.28,.05,.72,.95) both}
+.vote-swim>img{width:133px;height:75px;object-fit:cover;object-position:center;border-radius:56% 44% 50% 50%;border:3px solid #e7c886;box-shadow:0 4px 20px #1b4b3b33}
+.vote-swim-bubbles{position:absolute;left:-80px;top:30px;color:#5fbda8;letter-spacing:7px;font-size:21px}
+@keyframes vote-fish-cross{0%{transform:translateX(-52%);opacity:0}12%{opacity:1}72%{opacity:1}100%{transform:translateX(102%);opacity:0}}
+.vote-success>:not(.vote-swim):not(.celebration-layer){position:relative;z-index:2}
+
+/* Real results additions, shown only inside the existing post-vote modal. */
+.rivalry-quote{font-family:var(--font-display);font-size:17px;line-height:1.5;text-align:center;color:#45705a;margin:18px 5px -7px;font-style:italic}
+.milestone-banner{display:flex;align-items:center;gap:15px;margin-top:17px;border:1px solid #e2c47e;background:linear-gradient(125deg,#fff7dc,#eaf5df);padding:14px 19px;border-radius:12px;color:#355c40}
+.milestone-symbol{font-size:32px;color:#b99041;flex:0 0 auto}
+.milestone-banner strong{font-size:14px}.milestone-banner p{font-size:12px;margin:4px 0 0;color:#6b7854;line-height:1.5}
+.milestone-banner.milestone-pop{animation:milestone-celebrate 1s ease-out}
+@keyframes milestone-celebrate{0%{transform:scale(.94);filter:brightness(1.2)}55%{transform:scale(1.01)}100%{transform:scale(1);filter:brightness(1)}}
+.your-vote-chip{display:inline-block;background:#d2ede0;border:1px solid #a1ccb2;color:#24684f;border-radius:20px;font:800 10px var(--font-body);padding:4px 7px;white-space:nowrap;vertical-align:middle;margin-left:4px}
+.your-vote-chip[hidden],.milestone-banner[hidden]{display:none!important}
+
+/* Midnight mode makes the whole website feel like a canal at dusk. */
+:root[data-theme="night"]{--cream:#102a2b;--ivory:#1c3d36;--ink:#e6f0e8;--muted:#aecbbf;--border:#3b6759}
+[data-theme="night"] body{background:#102a2b;color:#e6f0e8}
+[data-theme="night"] .site-header{background:#031c23}
+[data-theme="night"] .hero{background:radial-gradient(ellipse at 76% 34%,#174d52,transparent 45%),linear-gradient(120deg,#03191f,#082b33)}
+[data-theme="night"] .hero-label{background:#22483d;color:#edf4e8}
+[data-theme="night"] .hero-label span{color:#b7d5c7}
+[data-theme="night"] .intro-bar{background:#12363a;border-color:#315858}
+[data-theme="night"] .intro-bar p,[data-theme="night"] .intro-number,[data-theme="night"] .intro-icon{color:#d5e8df}
+[data-theme="night"] .section-heading h2,[data-theme="night"] .fish-heading h3{color:#f0f4e9}
+[data-theme="night"] .section-heading p{color:#b2cbbf}
+[data-theme="night"] .fish-card{background:#193a35;box-shadow:0 12px 45px #0019122e}
+[data-theme="night"] .fish-content blockquote{color:#d2e0d6}
+[data-theme="night"] .fish-tagline{color:#b3d0ad}
+[data-theme="night"] .fish-pick{background:#315348;border-color:#53766a;color:#ecf5eb}
+[data-theme="night"] .fish-pick:hover{background:#426d57}
+[data-theme="night"] .fish-pick[aria-pressed="true"]{background:var(--card-accent);color:#112d24;border-color:var(--card-accent)}
+[data-theme="night"] .candidate-id{background:#e9eddb;color:#14352c}
+[data-theme="night"] .eco-section{background:#183e3e}
+[data-theme="night"] .eco-copy h2{color:#eff7e9}
+[data-theme="night"] .eco-copy>p:not(.eco-note),[data-theme="night"] .eco-note,[data-theme="night"] .eco-features small{color:#c2d6cb}
+[data-theme="night"] .eco-features{border-color:#558076}
+[data-theme="night"] .eco-features>div>span{color:#b9d4b9;border-color:#5e9285}
+[data-theme="night"] .aquarium-section{background:#041a24}
+[data-theme="night"] .aquarium-tank{background:radial-gradient(ellipse at 64% 0%,#22656960,transparent 47%),linear-gradient(160deg,#0b343d,#041a26)}
+[data-theme="night"] .quiz-section{background:#0d3235}
+[data-theme="night"] .quiz-intro h2{color:#f0f8e7}
+[data-theme="night"] .quiz-intro>p{color:#c2d8ce}
+[data-theme="night"] .quiz-card{background:#193d3b;border-color:#47736c}
+[data-theme="night"] .quiz-topline,[data-theme="night"] .quiz-result .overline{color:#a7d2b6}
+[data-theme="night"] #quiz-question,[data-theme="night"] .quiz-result h3{color:#ecf6e9}
+[data-theme="night"] .quiz-choice{background:#244e47;border-color:#54766b;color:#f1f7ea}
+[data-theme="night"] .quiz-choice:hover{background:#316352}
+[data-theme="night"] .quiz-choice-letter{background:#3d6b56;color:#f5f9e9}
+[data-theme="night"] .quiz-controls,[data-theme="night"] .quiz-result p:not(.quiz-share-status){color:#c2d7cd}
+[data-theme="night"] .quiz-back,[data-theme="night"] .quiz-retake,[data-theme="night"] .quiz-share-status{color:#b8ddb5}
+[data-theme="night"] .quiz-share{background:#346352;color:#f1f8ed;border-color:#648e78}
+[data-theme="night"] .ballot-section{background:#04191e}
+[data-theme="night"] .ballot-heading h2{color:#f0f7eb}
+[data-theme="night"] .ballot-heading p{color:#c1d8cd}
+[data-theme="night"] .ballot-panel{background:#1b3c36;color:#edf5e9}
+[data-theme="night"] .ballot-panel legend{color:#edf5e9}
+[data-theme="night"] .vote-option{background:#25483f;border-color:#547469;color:#eff7ec}
+[data-theme="night"] .vote-option:has(input:checked){background:#376354}
+[data-theme="night"] .vote-option small,[data-theme="night"] .ballot-footer p,[data-theme="night"] .vote-success p,[data-theme="night"] .post-vote-hint{color:#c9dccc}
+[data-theme="night"] .ballot-footer p small{color:#b0c8b9}
+[data-theme="night"] .vote-success h3{color:#f3f6e5}
+[data-theme="night"] .vote-success .success-icon{background:#386852;color:#f7d18b}
+[data-theme="night"] .site-footer{background:#031b1e}
+
+@media(max-width:1080px){.nav-links{gap:13px}.nav-links>a{font-size:12px}.nav-vote{padding:10px 14px}}
+@media(max-width:900px){.nav-links .nav-ecowal{display:none}.aquarium-tank{height:445px}.aquarium-fish{width:30%}}
+@media(max-width:740px){
+  .nav-links .nav-quiz{display:inline-flex;font-size:12px}.nav-links>a[href="#fish"]{display:none}.nav-links .nav-greenmile{display:none!important}.night-toggle{width:34px;height:34px;flex-basis:34px;font-size:19px}.nav-links{gap:9px}
+  .aquarium-section{padding:65px 0 70px}.aquarium-heading{align-items:start;flex-direction:column;gap:18px}.aquarium-tank{height:560px;border-radius:16px}
+  .aquarium-fish{width:42%;min-width:0}.aquarium-fish img{height:105px}.aquarium-fish span{font-size:16px;padding:9px}.aquarium-fish small{display:block;font-size:10px;margin-top:2px}
+  .aquarium-percia{left:6%;top:7%;--swim-x:10px;--swim-y:9px}.aquarium-stella{right:5%;top:29%;--swim-x:-12px;--swim-y:9px}.aquarium-bella{left:6%;bottom:30%;--swim-x:12px;--swim-y:-8px}.aquarium-roxy{right:5%;bottom:7%;--swim-x:-10px;--swim-y:-8px}
+  .aquarium-caption{max-width:190px;line-height:1.6;font-size:9px}
+  .quiz-shell{grid-template-columns:1fr;gap:25px}.quiz-intro h2{margin-bottom:13px}.quiz-decoration{display:none}.quiz-card{min-height:400px}.quiz-controls{align-items:start;flex-wrap:wrap}
+  .hero-quiz-link{font-size:12px}
+}
+@media(max-width:380px){.brand strong{font-size:14px}.brand small{font-size:7px}.nav-links .nav-quiz{font-size:11px}.nav-vote{font-size:11px;padding:9px 10px}.aquarium-fish img{height:88px}.aquarium-fish span{font-size:15px}}
+@media(prefers-reduced-motion:reduce){
+  .aquarium-fish,.aquarium-bubbles i,.vote-swim,.vote-swim.is-swimming,.milestone-banner.milestone-pop{animation:none!important}
+  .aquarium-fish{transform:none!important}.aquarium-bubbles i{opacity:.3}.quiz-progress>div{transition:none}
+}

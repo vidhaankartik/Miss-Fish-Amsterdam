@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght,SOFT,WONK@9..144,600,40,1;9..144,700,40,1&display=swap" rel="stylesheet">
+  <script>
+    try { if (localStorage.getItem('miss-fish-2026-night-mode') === 'on') document.documentElement.dataset.theme = 'night'; } catch (_) {}
+  </script>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
@@ -22,9 +25,11 @@
       <a class="brand" href="#top" aria-label="Miss Fish Amsterdam home"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>MISS FISH</strong><small>AMSTERDAM 2026</small></span></a>
       <div class="nav-links">
         <a href="#fish">Meet the fish</a>
-        <a href="#ecowal">The EcoWal</a>
+        <a href="#ecowal" class="nav-ecowal">The EcoWal</a>
+        <a href="#quiz" class="nav-quiz">Fish quiz</a>
         <a class="nav-greenmile" href="https://www.greenmileamsterdam.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit The Green Mile Amsterdam website (opens in a new tab)">The Green Mile <span aria-hidden="true">↗</span></a>
         <a class="nav-vote" href="#ballot">Vote <span aria-hidden="true">↗</span></a>
+        <button id="night-toggle" class="night-toggle" type="button" aria-label="Switch to night mode" aria-pressed="false" title="Switch to night mode"><span class="night-toggle-symbol" aria-hidden="true">☾</span></button>
       </div>
     </nav>
   </header>
@@ -37,7 +42,7 @@
           <div class="hero-sparkle" aria-hidden="true">✦</div>
           <h1>Who's the <em>star</em> of the canal?</h1>
           <p class="hero-lede">Four fish. Four personalities. One honorary host of the <strong>Fish Hotel</strong>. Get to know the neighbours beneath Amsterdam's canals, then choose your favourite.</p>
-          <div class="hero-actions"><a href="#fish" class="btn btn-gold">Meet the finalists <span aria-hidden="true">↗</span></a><a href="#ballot" class="btn btn-outline">Skip to voting</a></div>
+          <div class="hero-actions"><a href="#fish" class="btn btn-gold">Meet the finalists <span aria-hidden="true">↗</span></a><a href="#ballot" class="btn btn-outline">Skip to voting</a><a href="#quiz" class="hero-quiz-link">Take the fish personality quiz <span aria-hidden="true">↗</span></a></div>
           <div class="hero-footnote"><span aria-hidden="true">〰</span> A little curiosity goes a long way underwater.</div>
         </div>
         <div class="hero-art" aria-label="Percia the Perch swimming underwater">
@@ -51,7 +56,7 @@
     </section>
 
     <section class="intro-bar" aria-label="About the campaign">
-      <div class="shell intro-inner"><span class="intro-number">01 / 03</span><p>Meet Amsterdam's <strong>underwater personalities</strong>.</p><span class="intro-icon" aria-hidden="true">✳</span></div>
+      <div class="shell intro-inner"><span class="intro-number">01 / 05</span><p>Meet Amsterdam's <strong>underwater personalities</strong>.</p><span class="intro-icon" aria-hidden="true">✳</span></div>
     </section>
 
     <section id="fish" class="finalists section-pad shell" aria-labelledby="finalists-heading">
@@ -76,9 +81,55 @@
       </div>
     </section>
 
+
+    <!-- Fun extras: original fish art and ballot are unchanged. The quiz never submits a vote. -->
+    <section id="aquarium" class="aquarium-section" aria-labelledby="aquarium-heading">
+      <div class="shell">
+        <div class="aquarium-heading">
+          <div><span class="overline">02 / 05 · THE CANAL AQUARIUM</span><h2 id="aquarium-heading">A little <em>life below.</em></h2><p>Our four finalists are making waves. Tap a fish to meet them above — no vote required.</p></div>
+          <button id="aquarium-motion" class="aquarium-motion" type="button" aria-pressed="false">Ⅱ Pause swimming</button>
+        </div>
+        <div class="aquarium-tank" id="aquarium-tank" aria-label="Animated aquarium with four clickable fish">
+          <div class="aquarium-rays" aria-hidden="true"></div>
+          <div class="aquarium-bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <button class="aquarium-fish aquarium-percia" data-aquarium="percia" type="button" aria-label="Meet Percia the Perch"><img src="assets/percia.webp" alt="" loading="lazy"><span>Percia <small>the Perch</small></span></button>
+          <button class="aquarium-fish aquarium-stella" data-aquarium="stella" type="button" aria-label="Meet Stella the Stickleback"><img src="assets/stella.webp" alt="" loading="lazy"><span>Stella <small>the Stickleback</small></span></button>
+          <button class="aquarium-fish aquarium-bella" data-aquarium="bella" type="button" aria-label="Meet Bella the Bullhead"><img src="assets/bella.webp" alt="" loading="lazy"><span>Bella <small>the Bullhead</small></span></button>
+          <button class="aquarium-fish aquarium-roxy" data-aquarium="roxy" type="button" aria-label="Meet Roxy the Roach"><img src="assets/roxy.webp" alt="" loading="lazy"><span>Roxy <small>the Roach</small></span></button>
+          <div class="aquarium-floor" aria-hidden="true"></div>
+          <span class="aquarium-caption" aria-hidden="true">SOMEWHERE UNDER THE AMSTERDAM CANALS · ✳</span>
+        </div>
+        <p class="aquarium-footnote">An illustrated aquarium using the poster artwork, not a live camera feed.</p>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section section-pad" aria-labelledby="quiz-heading">
+      <div class="shell quiz-shell">
+        <div class="quiz-intro"><span class="overline">03 / 05 · JUST FOR FUN</span><h2 id="quiz-heading">Which canal fish <em>are you?</em></h2><p>Five quick questions. Four very different personalities. Find your underwater alter ego.</p><div class="quiz-decoration" aria-hidden="true">✳ · ✦ · ✳</div></div>
+        <div class="quiz-card" id="quiz-card">
+          <div id="quiz-questions">
+            <div class="quiz-topline"><span id="quiz-step-label">QUESTION 01 OF 05</span><span>NO RIGHT ANSWERS</span></div>
+            <div class="quiz-progress" role="progressbar" id="quiz-progress" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="quiz-progress-fill"></div></div>
+            <h3 id="quiz-question">Loading your quiz…</h3>
+            <div id="quiz-choices" class="quiz-choices" role="group" aria-labelledby="quiz-question"></div>
+            <div class="quiz-controls"><button id="quiz-back" class="quiz-back" type="button" disabled>← Previous question</button><span>Just a playful personality match, not a scientific test.</span></div>
+          </div>
+          <div id="quiz-result" class="quiz-result" hidden aria-live="polite">
+            <span class="overline">YOUR CANAL ALTER EGO</span>
+            <div class="quiz-result-image"><img id="quiz-result-image" src="assets/percia.webp" alt="" width="817" height="371"></div>
+            <h3 id="quiz-result-heading">You're Percia!</h3>
+            <p id="quiz-result-description"></p>
+            <div class="quiz-result-actions"><button type="button" class="btn btn-gold" id="quiz-vote">Choose this fish <span aria-hidden="true">↗</span></button><button type="button" class="btn quiz-share" id="quiz-share">Share my match <span aria-hidden="true">↗</span></button></div>
+            <p id="quiz-share-status" class="quiz-share-status" role="status" aria-live="polite"></p>
+            <button type="button" class="quiz-retake" id="quiz-retake">↺ Retake the quiz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="ecowal" class="eco-section" aria-labelledby="eco-heading"><div class="shell eco-inner"><div class="eco-picture"><img src="assets/ecowal.webp" width="1074" height="530" alt="Cross-section of an Amsterdam canal showing a planted habitat structure beneath the canal wall" loading="lazy"><div class="eco-picture-label">SINGELGRACHT · AMSTERDAM</div></div><div class="eco-copy"><span class="overline">MEET THE FISH HOTEL</span><h2 id="eco-heading">Canal-side luxury.<br><em>Zero rent.</em></h2><p>The Green Mile's <strong>EcoWal</strong> makes space for aquatic life along Amsterdam's canal walls. Its habitat structures offer hiding places and shelter beneath the surface.</p><div class="eco-features"><div><span aria-hidden="true">⌂</span><p><strong>Shelter</strong><small>For fish and other aquatic life</small></p></div><div><span aria-hidden="true">❋</span><p><strong>Habitat</strong><small>More places for canal nature</small></p></div></div><a class="eco-official-link" href="https://www.greenmileamsterdam.com/" target="_blank" rel="noopener noreferrer">Explore The Green Mile Amsterdam <span aria-hidden="true">↗</span></a><p class="eco-note">These are fish found in Amsterdam's canals; the poster does not claim each species has been observed at this particular EcoWal.</p></div></div></section>
 
-    <section id="ballot" class="ballot-section section-pad" aria-labelledby="vote-heading"><div class="shell ballot-shell"><div class="ballot-heading"><span class="overline">THE MOMENT OF TRUTH · 03 / 03</span><h2 id="vote-heading">Who gets <em>your vote?</em></h2><p>Choose your favourite canal character and help crown the honorary host of the Fish Hotel.</p></div><div class="ballot-panel">
+    <section id="ballot" class="ballot-section section-pad" aria-labelledby="vote-heading"><div class="shell ballot-shell"><div class="ballot-heading"><span class="overline">THE MOMENT OF TRUTH · 05 / 05</span><h2 id="vote-heading">Who gets <em>your vote?</em></h2><p>Choose your favourite canal character and help crown the honorary host of the Fish Hotel.</p></div><div class="ballot-panel">
       <form id="vote-form" name="miss-fish-vote" method="POST" action="/thank-you/" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="miss-fish-vote"><p class="honeypot"><label>Leave this blank <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <fieldset><legend>Choose one finalist</legend><div class="vote-options">
@@ -93,6 +144,7 @@
       </form>
       <div id="vote-success" class="vote-success" role="status" aria-live="polite" hidden>
         <div class="celebration-layer" id="celebration-layer" aria-hidden="true"></div>
+        <div id="vote-swim" class="vote-swim" aria-hidden="true"><img id="vote-swim-image" src="assets/percia.webp" alt=""><span class="vote-swim-bubbles">◌ · ○ · ◌</span></div>
         <span class="success-icon" aria-hidden="true">✳</span><span class="overline">BALLOT RECEIVED</span>
         <h3>You're <em>fin-tastic!</em></h3><p id="success-message">Your vote has been recorded. Thanks for meeting Amsterdam's underwater neighbours!</p>
         <div class="success-actions">
@@ -115,6 +167,8 @@
       <div id="results-status" class="results-status" role="status" aria-live="polite">Loading results…</div>
       <div id="results-content" hidden>
         <div class="winner-banner" id="winner-banner"><span class="winner-crown" aria-hidden="true">♛</span><div><span class="winner-kicker">CURRENTLY LEADING</span><strong id="winner-name">—</strong><small id="winner-caption">—</small></div></div>
+        <div id="milestone-banner" class="milestone-banner" hidden><span class="milestone-symbol" aria-hidden="true">✦</span><div><strong id="milestone-heading">Milestone unlocked!</strong><p id="milestone-description"></p></div></div>
+        <p id="rivalry-quote" class="rivalry-quote" hidden></p>
         <div class="leaderboard-bars" id="leaderboard-bars" aria-label="Results for the four finalists">
           <div class="result-row" data-result="percia" style="--result-accent:#c98747"><img src="assets/percia.webp" alt="" width="70" height="56" loading="lazy"><div class="result-main"><div class="result-meta"><strong>Percia <span>the Perch</span></strong><span class="result-numbers"><b data-percent>0%</b><small data-votes>0 votes</small></span></div><div class="result-track"><div class="result-fill" data-bar style="width:0%"></div></div></div></div>
           <div class="result-row" data-result="stella" style="--result-accent:#a8b685"><img src="assets/stella.webp" alt="" width="70" height="56" loading="lazy"><div class="result-main"><div class="result-meta"><strong>Stella <span>the Stickleback</span></strong><span class="result-numbers"><b data-percent>0%</b><small data-votes>0 votes</small></span></div><div class="result-track"><div class="result-fill" data-bar style="width:0%"></div></div></div></div>
